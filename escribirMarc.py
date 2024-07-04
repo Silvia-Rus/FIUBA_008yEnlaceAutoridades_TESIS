@@ -4,8 +4,6 @@ class EscribirMARC:
       Escribe un registro en un archivo.
     """
 
-    nombreArchivo = ''
-
     def __init__(self, nombreArchivo):
         """
           Asigna el nombre del archivo en el cual se va a escribir.

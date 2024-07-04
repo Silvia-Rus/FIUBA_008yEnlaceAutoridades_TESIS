@@ -37,7 +37,6 @@ def query(campo):
         if(i > 1):
             wherePart += ' AND '
         i -= 1
-    print(selectPart+selectExtractPart+fromPart+wherePart)
     return selectPart+selectExtractPart+fromPart+wherePart
 
 def findMatchingAuth(campo):

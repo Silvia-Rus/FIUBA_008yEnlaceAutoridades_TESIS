@@ -51,7 +51,6 @@ class CF008_maker:
        str18_21 += 'o' if tieneFotos(listaDe300a300b) else ''
        while len(str18_21) < 4:
         str18_21 += '|'
-       print(str18_21)
        return self.setPosiciones008(str18_21, 18, 21)
 
     def getAnio26XCifras(self):

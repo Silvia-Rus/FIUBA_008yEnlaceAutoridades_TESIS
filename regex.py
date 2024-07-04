@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import unicodedata
 import sys
-
 import re
 from Casos.casos008 import a, d, o
 
@@ -14,7 +13,6 @@ def getCuatroPrimerasCifras(texto):
     busqueda = re.search(r'\d{4}', str(texto))
     if busqueda:
         retorno = busqueda.group()
-        print(retorno)
     return retorno
 
 def apareceElStringEnLaLista(listaDeCasos, listaDeSubcampos):

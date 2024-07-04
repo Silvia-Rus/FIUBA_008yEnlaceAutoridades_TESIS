@@ -15,11 +15,12 @@ class Enlazador:
     """
       Se inician los valores de los contadores para la estadistica final.
     """
+    self.record = ''
     self.unlinkedAuth  = 0 
     self.matchingAuth  = 0
     self.recordCounter = 0
 
-  def link_auth(self, listaDeCampos, bibRecord): 
+  def link_auth(self, listaDeCampos): 
     """
       Se generan los enlaces a las autoridades (en el caso de que no lo tenga y de que exista en la base de autoridades) 
       en un registro bibliografico concreto.
@@ -31,20 +32,18 @@ class Enlazador:
         listaDeCampos (list de Campo): la lista de campos que se quieren enlazar del registro bibliografico.
           estos campos deberan contener el listado de subcampos que se deben chequear para establecer la igualdad.
 
-        bibRecord (record): registro del cual se quieren enlazar los encabezamientos que no tengan enlace.
-
       Return:
         Record: devuelve el registro con los encabezamientos enlazados. 
     """
     self.recordCounter += 1
     for campo in listaDeCampos: 
-      ocurrenciasDelCampo = getListaDeCamposEnRegistro(bibRecord, campo.campo)
+      ocurrenciasDelCampo = getListaDeCamposEnRegistro(self.record, campo.campo)
       if(len(ocurrenciasDelCampo) > 0):
         i = 0
         for ocurrencia in ocurrenciasDelCampo:
           campoSin9 = Enlazador.detectarCampoSinEnlazar(ocurrencia, campo)
           if(campoSin9 != False):
-            biblionumber = getCF001(bibRecord)
+            biblionumber = getCF001(self.record)
             authEnBd = Enlazador.detectarAuthEnBD(campoSin9)
             authId = authEnBd[0] if authEnBd else ''
             tesauro = authEnBd[1] if authEnBd else ''
@@ -57,7 +56,7 @@ class Enlazador:
               print(writeCSVUnmatched(str(biblionumber), campoSin9))
               self.unlinkedAuth+=1
           i+=1
-    return bibRecord
+   
   
   @staticmethod
   def detectarCampoSinEnlazar(field, campo): 
