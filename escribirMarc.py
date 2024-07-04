@@ -22,5 +22,7 @@ class EscribirMARC:
           Args:
             record (record): el registro que se quiere escribir en el archivo.
         """
-        with open(self.nombreArchivo, 'a') as out:
+        record.fields.sort(key=lambda field: field.tag)
+        with open(self.nombreArchivo, 'ab') as out:
             out.write(record.as_marc())
+

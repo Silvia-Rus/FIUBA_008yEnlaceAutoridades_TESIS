@@ -25,14 +25,14 @@ def createCSVUnmatched():
     """
       Crea un CSV en el que se van a registrar los campos que no tienen enlace y no se han podido enlazar.
     """
-    header = ['Link', 'BN','Campo','$a', 'SC2']
+    header = ['Link', '001','Campo','$a', 'SC2']
     createCSV(unmatchedName, header)
 
 def createCSVMatched():
     """
       Crea un CSV en el que se van a registrar los campos que se han podido enlazar.
     """
-    header = ['Aut','Biblio','BN','Campo','$9','$a', 'SC2']
+    header = ['Aut','Biblio','001','Campo','$9','$a', 'SC2']
     createCSV(matchedName, header)
 
 def createCSVCounters():
@@ -97,8 +97,8 @@ def writeCSVMatched(biblionumber, SC9, campo):
         String: los datos que se van a mostrar por pantalla sobre el campo que se ha podido enlazar.
     """
     data = []
-    data.append(linkCatalogAut+SC9)
-    data.append(linkCatalogBib+biblionumber)
+    data.append(linkCatalogAut+str(SC9))
+    data.append(str(linkCatalogBib)+biblionumber)
     data.append(biblionumber)
     data.append(campo.campo)
     data.append(SC9)

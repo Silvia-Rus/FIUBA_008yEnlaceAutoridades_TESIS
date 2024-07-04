@@ -13,7 +13,8 @@ def formExtractValue(campo, subcampo):
     Returns: 
         string: listo para usar en la consulta SQL.
     """
-    return '''ExtractValue(a.marcxml, '//datafield[@tag="'''+campo.enAut+'"]/subfield[@code="'+subcampo.letra+'''"]')'''+'="'+subcampo.valor+'"'
+    valorSubcampo = subcampo.valor.decode('utf-8')
+    return '''ExtractValue(a.marcxml, '//datafield[@tag="'''+str(campo.enAut)+'"]/subfield[@code="'+str(subcampo.letra)+'''"]')'''+'="'+valorSubcampo+'"'
 
 def query(campo):
     """
@@ -25,7 +26,8 @@ def query(campo):
         Returns:
             string: la query en SQL lista para ser lanzada a la BD.
     """
-    selectPart = 'SELECT a.authid '
+    selectExtractPart = '''ExtractValue(a.marcxml, '//datafield[@tag="'''+str(campo.enAut)+'"]/subfield[@code="'+str(2)+'''"]')'''
+    selectPart = 'SELECT a.authid, '
     fromPart = ' FROM auth_header a '
     wherePart = 'WHERE '
     i = len(campo.subcampos)
@@ -35,8 +37,8 @@ def query(campo):
         if(i > 1):
             wherePart += ' AND '
         i -= 1
-    # print(selectPart+fromPart+wherePart)
-    return selectPart+fromPart+wherePart
+    print(selectPart+selectExtractPart+fromPart+wherePart)
+    return selectPart+selectExtractPart+fromPart+wherePart
 
 def findMatchingAuth(campo):
     """

@@ -1,4 +1,5 @@
-from pymarc import MARCReader
+# -*- coding: utf-8 -*-
+from pymarc import MARCReader, Field
 
 def setCampoSubcampoValor(campo, subcampo, valor):
     """
@@ -10,4 +11,11 @@ def setCampoSubcampoValor(campo, subcampo, valor):
             valor (str): valor que se le quiere asignar al subcampo
     """
     campo.add_subfield(subcampo, valor)
+
+def setCF(record, CF, valores):
+    record.remove_field(record.get_fields(CF)[0])
+    record.add_field(Field(tag=CF, data=valores))
+
+def setCF008(record, valores):
+    setCF(record, '008', valores)
 

@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from pymarc import MARCReader
+from pymarc import Field
 
-#FIELDS
 def getListaDeCamposEnRegistro(record, fieldTag):
    """
       Devuelve las ocurrencias de un campo en concreto que se encuentran dentro de un registro.
@@ -14,7 +15,6 @@ def getListaDeCamposEnRegistro(record, fieldTag):
    """
    return record.get_fields(fieldTag)
 
-#SUBFIELDS
 def getSubfields(field, subfield):
     """
       De un campo en concreto se devuelve un listado de subcampos cuya letra se especifica en el argumento.
@@ -56,7 +56,7 @@ def getSubfieldsFromField(record, fieldTag, subfieldTag):
     listFields = getListaDeCamposEnRegistro(record, fieldTag)
     listSubfields = []
     for field in listFields:
-        listSubfields.append(getSubfields(field, subfieldTag))
+        listSubfields += getSubfields(field, subfieldTag)
     return listSubfields
         
 def getList260c(record):
@@ -65,6 +65,10 @@ def getList260c(record):
 def getList264c(record):
     return getSubfieldsFromField(record, '264', 'c')
 
+def getIl300(record):
+    list300a = getSubfieldsFromField(record, '300', 'a')
+    list300b = getSubfieldsFromField(record, '300', 'b')
+    return list300a + list300b
 
 def getAnio26X(record):
     list260c = getList260c(record)
@@ -111,12 +115,23 @@ def getBiblioNumber(record):
          Record (Record): registro del cual se quiere saber el biblionumber.
       
       Return:
-         String: el Biblionumber del registro.
+         String: el Biblionumber del registro o None si no contiene campo 990$c.
    """
-   return record.get_fields('999')[0].get_subfields('c')[0]
+   listaCampos999 = record.get_fields('999')
+   if len(listaCampos999) > 0:
+      listaSubcampos999c = listaCampos999[0].get_subfields('c')
+      if len(listaSubcampos999c) > 0:
+         return listaSubcampos999c[0]
+   return None
 
 def getCF008(record):
-    return record.get_fields('008')
+    return record['008']
+
+def getCF001(record):
+    # return record.get_fields('008')[0].encode('utf-8')
+    return record['001']
+
+
 
 
    

@@ -1,11 +1,8 @@
 from pymarc    import MARCReader
-from gettersSetters.getters   import getHasUnlinkedAuth
-from gettersSetters.getters   import getListaDeCamposEnRegistro
-from gettersSetters.getters   import getBiblioNumber  
+from gettersSetters.getters   import getHasUnlinkedAuth, getListaDeCamposEnRegistro, getCF001
 from gettersSetters.setters   import setCampoSubcampoValor
 from DAO.autoridadesDAO import findMatchingAuth
-from informes  import writeCSVUnmatched
-from informes  import writeCSVMatched
+from informes  import writeCSVUnmatched, writeCSVMatched
 from entidades.campo     import Campo
 from entidades.subcampo  import Subcampo
 
@@ -47,14 +44,17 @@ class Enlazador:
         for ocurrencia in ocurrenciasDelCampo:
           campoSin9 = Enlazador.detectarCampoSinEnlazar(ocurrencia, campo)
           if(campoSin9 != False):
-            biblionumber = getBiblioNumber(bibRecord)
-            authId =  Enlazador.detectarAuthIdenBD(campoSin9)
-            if(authId != False):
+            biblionumber = getCF001(bibRecord)
+            authEnBd = Enlazador.detectarAuthEnBD(campoSin9)
+            authId = authEnBd[0] if authEnBd else ''
+            tesauro = authEnBd[1] if authEnBd else ''
+            if(authEnBd != False):
               setCampoSubcampoValor(ocurrenciasDelCampo[i], '9', authId)
-              print(writeCSVMatched(biblionumber, authId, campoSin9))
+              setCampoSubcampoValor(ocurrenciasDelCampo[i], '2', tesauro)
+              print(writeCSVMatched(str(biblionumber), authId, campoSin9))
               self.matchingAuth+=1
             else:
-              print(writeCSVUnmatched(biblionumber, campoSin9))
+              print(writeCSVUnmatched(str(biblionumber), campoSin9))
               self.unlinkedAuth+=1
           i+=1
     return bibRecord
@@ -78,7 +78,7 @@ class Enlazador:
     return retorno
   
   @staticmethod
-  def detectarAuthIdenBD(campo):
+  def detectarAuthEnBD(campo):
     """
       Busca en la BD el AuthId que eventualmente debe ser el valor a asignar en el $9 del campo del registro.
 
@@ -88,8 +88,9 @@ class Enlazador:
     retorno = False
     ocurrenciasEnBD = findMatchingAuth(campo)
     if(len(ocurrenciasEnBD) > 0):
-      return str(ocurrenciasEnBD[0][0])
+      return ocurrenciasEnBD[0]
     return retorno
+
 
 
 
