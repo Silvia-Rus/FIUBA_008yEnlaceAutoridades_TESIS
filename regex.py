@@ -18,6 +18,7 @@ def getCuatroPrimerasCifras(texto):
 def apareceElStringEnLaLista(listaDeCasos, listaDeSubcampos):
     for caso in listaDeCasos:
         for sc in listaDeSubcampos:
+            scSinTilde = quitarTilde(str(sc))+' '
             if caso in str(sc):
                 return  True        
     return False

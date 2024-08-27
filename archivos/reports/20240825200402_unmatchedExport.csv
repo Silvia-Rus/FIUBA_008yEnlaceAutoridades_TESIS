@@ -1,0 +1,7 @@
+Link,001,Campo,$a,SC2
+http://catalogo.fi.uba.ar:8080/cgi-bin/koha/cataloguing/addbiblio.pl?biblionumber==001  20841,=001  20841,100,"b'Silveyra Olazabal, Luis'"
+http://catalogo.fi.uba.ar:8080/cgi-bin/koha/cataloguing/addbiblio.pl?biblionumber==001  20841,=001  20841,650,b'ADOQUINES'
+http://catalogo.fi.uba.ar:8080/cgi-bin/koha/cataloguing/addbiblio.pl?biblionumber==001  20841,=001  20841,650,b'PAVIMENTOS ARTICULADOS'
+http://catalogo.fi.uba.ar:8080/cgi-bin/koha/cataloguing/addbiblio.pl?biblionumber==001  20841,=001  20841,700,"b'Balb\xc3\xadn, Valent\xc3\xadn'"
+http://catalogo.fi.uba.ar:8080/cgi-bin/koha/cataloguing/addbiblio.pl?biblionumber==001  20841,=001  20841,700,"b'B\xc3\xbctner, Adolfo T.'"
+http://catalogo.fi.uba.ar:8080/cgi-bin/koha/cataloguing/addbiblio.pl?biblionumber==001  20841,=001  20841,700,"b'Rossetti, Emilio'"

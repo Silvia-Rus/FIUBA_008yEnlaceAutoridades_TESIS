@@ -1,5 +1,4 @@
 
-#!/usr/bin/env python3
 import os
 import sys
 from datetime import datetime
@@ -10,10 +9,14 @@ from pymarc    import MARCReader
 from escribirMarc import EscribirMARC
 from informes  import initCSV, writeCSVCounter
 from CF008_maker import CF008_maker
+from F952_maker import F952_maker
+
 
 # biblios = 'archivos/mrcFiles/BIB_TODOS.mrc'
-biblios = 'archivos/mrcFiles/BIB_10REG.mrc'
+# biblios = 'archivos/mrcFiles/BIB_10REG.mrc'
 # biblios = 'archivos/mrcFiles/BIB_1REG.mrc'
+biblios = 'archivos/mrcFiles/BIB3.mrc'
+
 
 campo100 = Campo('100', [Subcampo('a', ''), Subcampo('d', '')])
 campo110 = Campo('110', [Subcampo('a', ''), Subcampo('b', '')])
@@ -39,9 +42,11 @@ if(len(listaDeCampos) > 0):
                 enlazador.record = record
                 enlazador.link_auth(listaDeCampos)
                 CF008_maker(record).addCF008()
+                F952_maker(record).addF952()
+                # print(record)
                 e.escribir(record)
             print(writeCSVCounter(enlazador.recordCounter, enlazador.unlinkedAuth, enlazador.matchingAuth))
-            print("Trasnformacion exitosa:\n"
+            print("Transformacion exitosa:\n"
                   "->Puede ver su archivo mrc modificado en archivos/mrcTransformed.\n"
                   "->Puede ver los informes completos en archivos/reports.")
     else:

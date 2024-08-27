@@ -5,6 +5,7 @@ from gettersSetters.getters   import getCF008
 from gettersSetters.setters   import setCF008
 from regex import getCuatroPrimerasCifras, tieneFotos, tieneGraficas, tieneIlustraciones
 from datetime import datetime
+from pymarc import Field
 
 class CF008_maker:
     def __init__(self, record):
@@ -61,9 +62,13 @@ class CF008_maker:
        self.setControlField008_00_05()
        self.setControlField008_06_10()
        self.setControlField008_18_21()
+       fechaActual = datetime.now()
+       fechaActualConFormato = fechaActual.strftime('%Y%m%d%H%M%S.%f')[:-5]
+       self.record.add_field(Field(tag='005', data=fechaActualConFormato))
        setCF008(self.record, self.CF008)
 
 
+              
               
                   
         

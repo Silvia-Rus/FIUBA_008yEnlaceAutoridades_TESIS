@@ -1,5 +1,24 @@
 # -*- coding: utf-8 -*-
 #ILUSTRACIONES
-a = ['lám', 'dibujo', 'lam', 'il', 'fig', 'diagrama']
-d = ['graf']
-o = ['foto']
+a = [
+    'diagrama'
+    "dibujos",
+    "figs.",
+    "il.",
+    "il.,",
+    "lám.",
+    "lámina",
+    "láminas",
+    "lams",
+    "láms",
+    "láms."
+]
+d =  [
+    "gráfs.",
+    "gráfs.,",
+]
+o =  [
+    "fotos",
+    "fotos,",
+    "fotografía"
+]
